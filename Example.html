@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<title>Tree</title>
+		<link rel="stylesheet" type="text/css" href="css/Tree.css">
+		<link rel="stylesheet" type="text/css" href="css/Example.css">
+		<script src="src/Tree.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+						{
+								text : 'Create',
+								icon: 'images/blue_key.png',
+								action : function(node) {
+
+								},
+								submenu: {
+									elements : [
+										{
+											text : 'Create Folder',
+											icon: 'images/add1.png',
+											action : function(node) {
+												node.createChildNode('Created',false,'images/folder.png',null,'context1');
+											}
+										},
+
+										{
+										text: 'Create File',
+										icon: 'images/add1.png',
+										action: function(node) {
+											node.createChildNode('Created',false,'images/file.png',null,'context1');
+										}
+										},
+									]
+								}
+							},
+
+							{
+								text : 'Node Actions',
+								icon: 'images/blue_key.png',
+								action : function(node) {
+
+								},
+								submenu: {
+									elements : [								
+										{
+											text: 'Rename Node',
+											icon:'images/pencil.png',
+											action: function(node){
+												node.renameNode();
+											}
+										},
+
+										{
+											text : 'Delete Node',
+											icon: 'images/delete.png',
+											action : function(node) {
+												node.removeNode();
+											}
+										},
+
+										{
+											text : 'Delete Child Nodes',
+											icon: 'images/delete.png',
+											action : function(node) {
+												node.removeChildNodes();
+											}
+										}
+									]
+								}
+							}
+							
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+			
+
+				//Loop to create test node
+				for (var i=1; i<2; i++) {
+					node1 = tree.createNode('Body ', false,'images/star.png',null,null,'context1');
+				}
+				//Rendering the tree
+				tree.drawTree();
+
+			};
+		</script>
+	</head>
+	<body>
+		<div id="div_tree"></div>
+
+	</body>
+</html>
