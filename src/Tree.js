@@ -279,24 +279,54 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 			nodeTextWrapper.removeChild(nodeText);
 			nodeTextWrapper.appendChild(newNameInput);
 			newNameInput.focus();
-			console.log(oldName);
 
 		},
+
 		
+
+		RemoveWindow: function() {
+				isRemove = Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Yes, delete it!',
+					cancelButtonText: 'No, cancel!',
+					}).then((isRemove) => {
+						
+						if(isRemove.value) {
+							this.removeNode,
+							Swal.fire(
+								'Deleted!',
+								'Your file has been deleted.',
+								'success'
+							)
+						} else if (
+							isRemove.dismiss === Swal.DismissReason.cancel
+						) {
+							Swal.fire(
+								'Cancelled',
+								'Your imaginary file is safe :)',
+								'error'
+							)
+						}
+					})
+
+
+
+		},
+
+
+
+
+		
+		
+			
 		///// Deleting node with confim popup
 		removeNode: function(p_node) {
-			var isRemove = window.confirm("This is very dangerous, you shouldn't do it! Are you really really sure?");
-			if (isRemove === true) {
-				this.removeNode;
-			}	else {
-				stopPropagation();
-			}
-			setTimeout(function() {
-				isRemove.close();
-			}, 1000);
-			console.log(setTimeout);
+			this.RemoveWindow();
 
-
+			
 			var index = p_node.parent.childNodes.indexOf(p_node);
 
 			if (p_node.elementLi.className=="last" && index!=0) {
@@ -313,6 +343,8 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 			}
 
 		},
+
+
 		///// Deleting all node children with confirm popup
 		// p_node: Reference to the node;
 		removeChildNodes: function(p_node) {
