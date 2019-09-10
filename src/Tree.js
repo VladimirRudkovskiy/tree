@@ -281,51 +281,42 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 			newNameInput.focus();
 
 		},
-
 		
-
-		RemoveWindow: function() {
-				isRemove = Swal.fire({
-					title: 'Are you sure?',
-					text: "You won't be able to revert this!",
-					type: 'warning',
-					showCancelButton: true,
-					confirmButtonText: 'Yes, delete it!',
-					cancelButtonText: 'No, cancel!',
-					}).then((isRemove) => {
-						
-						if(isRemove.value) {
-							this.removeNode,
-							Swal.fire(
-								'Deleted!',
-								'Your file has been deleted.',
-								'success'
-							)
-						} else if (
-							isRemove.dismiss === Swal.DismissReason.cancel
-						) {
-							Swal.fire(
-								'Cancelled',
-								'Your imaginary file is safe :)',
-								'error'
-							)
-						}
-					})
-
-
-
-		},
-
-
-
-
-		
-		
-			
-		///// Deleting node with confim popup
+	
+		///// Deleting node with Swal popup
 		removeNode: function(p_node) {
-			this.RemoveWindow();
+			let timerInterval
+			Swal.fire({
+				title: 'This is very dangerous, you shouldn`t do it!' + "<br/><br/>" + "Are you really really sure?",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it!',
+				cancelButtonText: 'No, cancel!',
+				html: 'I will close in <strong></strong> seconds.<br/><br/>',
+				timer: 10000,
+				onBeforeOpen: () => {
+					const content = Swal.getContent()
 
+					const $ = content.querySelector.bind(content)
+
+					timerInterval = setInterval(() => {
+						Swal.getContent().querySelector('strong')
+							.textContent = (Swal.getTimerLeft() / 1000)
+							.toFixed(0)
+					}, 100)
+				},
+
+				onClose: () => {
+					clearInterval(timerInterval)
+				
+				}
+			}).then((result) => {
+				if(result.value) {
+					Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+				)
 			
 			var index = p_node.parent.childNodes.indexOf(p_node);
 
@@ -341,19 +332,54 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				var v_img = p_node.parent.elementLi.getElementsByTagName("img")[0];
 				v_img.style.visibility = "hidden";
 			}
+		} else if (
+			result.dismiss === Swal.DismissReason.cancel
+		) {
+			Swal.fire(
+				'Cancelled',
+				'Your files are safe :)',
+				'error'
+			)
+		}
 
-		},
+		})
+	},
 
 
-		///// Deleting all node children with confirm popup
+		///// Deleting all node children with Swal popup
 		// p_node: Reference to the node;
 		removeChildNodes: function(p_node) {
-			var isRemove = window.confirm("This is very dangerous, you shouldn't do it! Are you really really sure??");
-			if (isRemove === true) {
-				this.removeChildNodes;
-			}	else {
-				stopPropagation();
-			}
+			Swal.fire({
+				title: 'This is very dangerous, you shouldn`t do it!' + "<br/><br/>" + "Are you really really sure?",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it!',
+				cancelButtonText: 'No, cancel!',
+				html: 'I will close in <strong></strong> seconds.<br/><br/>',
+				timer: 10000,
+				onBeforeOpen: () => {
+					const content = Swal.getContent()
+
+					const $ = content.querySelector.bind(content)
+
+					timerInterval = setInterval(() => {
+						Swal.getContent().querySelector('strong')
+							.textContent = (Swal.getTimerLeft() / 1000)
+							.toFixed(0)
+					}, 100)
+				},
+
+				onClose: () => {
+					clearInterval(timerInterval)
+				
+				}
+			}).then((result) => {
+				if(result.value) {
+				Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+				)
 
 			if (p_node.childNodes.length>0) {
 				var v_ul = p_node.elementLi.getElementsByTagName("ul")[0];
@@ -364,6 +390,17 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				p_node.childNodes = [];
 				v_ul.innerHTML = "";
 			}
+				} else if (
+					result.dismiss === Swal.DismissReason.cancel
+				) {
+					Swal.fire(
+						'Cancelled',
+						'Your files are safe :)',
+						'error'
+					)
+				}
+		
+				})
 		},
 		///// Rendering context menu when mouse right button is pressed over a node. This function should no be called directly
 		// p_event: Event triggered when right clicking;
