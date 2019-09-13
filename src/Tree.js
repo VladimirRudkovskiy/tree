@@ -37,14 +37,13 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				removeNode: function() { v_tree.removeNode(this); },
 				///// Expanding the node
 				expandNode: function(p_event) { v_tree.expandNode(this); },
-				///// Changing the node text
-				// p_text: New text;
 				///// Collapsing the node
 				collapseNode: function() { v_tree.collapseNode(this); },
+				//rename node 
 				renameNode: function() { v_tree.renameNode(this); },
 				///// Deleting all child nodes
 				removeChildNodes: function() { v_tree.removeChildNodes(this); },
-				///// Creating a new child node;
+				///// Creating a new child node (icon "file");
 				// p_text: Text displayed;
 				// p_expanded: True or false, indicating wether the node starts expanded or not;
 				// p_icon: Icon;
@@ -248,10 +247,9 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 			this.selectedNode = p_node;
 		},
 
-		// Renaming Node 
+		///// Renaming Node 
 		
 		renameNode: function(p_node) {
-			console.log('renameNode:' ,p_node);
 			var nodeText = p_node.elementLi.querySelector('.node_text');
 			var nodeTextWrapper = p_node.elementLi.getElementsByTagName("span")[0];
 			var oldName = nodeText.innerText;
@@ -293,7 +291,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				confirmButtonText: 'Yes, delete it!',
 				cancelButtonText: 'No, cancel!',
 				html: 'I will close in <strong></strong> seconds.<br/><br/>',
-				timer: 10000,
+				timer: 20000,
 				onBeforeOpen: () => {
 					const content = Swal.getContent()
 
@@ -356,7 +354,7 @@ function createTree(p_div,p_backColor,p_contextMenu) {
 				confirmButtonText: 'Yes, delete it!',
 				cancelButtonText: 'No, cancel!',
 				html: 'I will close in <strong></strong> seconds.<br/><br/>',
-				timer: 10000,
+				timer: 20000,
 				onBeforeOpen: () => {
 					const content = Swal.getContent()
 
